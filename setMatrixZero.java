@@ -78,4 +78,49 @@ class Solution {
 
 
 //Most optimal approach
+//Space Complexity = O(1)
+//Time Complpexity = O(M*N)
 
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+
+        boolean markColZero = false;
+
+        int noOfRows = matrix.length;
+        int noOfCols = matrix[0].length;
+
+
+        //Marks rows and columns.
+        for(int rowNo = 0; rowNo < noOfRows; rowNo++) {
+            for(int colNo = 0; colNo < noOfCols; colNo++) {
+                if(matrix[rowNo][colNo] == 0) {
+                    if(colNo == 0) {
+                        //Mark col 0th status.
+                        markColZero = true;
+                    }
+                    else {
+                        //Mark col status for the rest of the columns.
+                        matrix[0][colNo] = 0;
+                    }
+                    //Mark row status.
+                    matrix[rowNo][0] = 0;
+                } else continue;
+            }
+        }
+
+        for(int rowNo = noOfRows - 1; rowNo >= 0; rowNo--) {
+            for(int colNo = noOfCols - 1; colNo >= 0; colNo--) {
+                if(colNo == 0 && markColZero) {
+                    matrix[rowNo][colNo] = 0;
+                }
+                else if((matrix[rowNo][0] == 0 || matrix[0][colNo] == 0) && colNo != 0) {
+                    matrix[rowNo][colNo] = 0;
+                }
+            }
+        }
+        
+    }
+}
